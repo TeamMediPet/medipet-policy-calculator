@@ -16,4 +16,4 @@ const pickAPrimary = pets => {
   };
 };
 
-module.exports = pickAPrimary;
+export default pickAPrimary;

@@ -35,9 +35,12 @@ const buildResponse = (pets, pricing) => {
   return {
     ...petsWithPrices,
     monthlySubTotal,
-    monthlyTotal: monthlySubTotal + monthlyServiceFee,
+    monthlyTotal,
     monthlyServiceFee,
     annualSubTotal,
+    annualTotal,
     annualServiceFee
   };
 };
+
+export default buildResponse;

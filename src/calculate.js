@@ -1,5 +1,5 @@
-const buildResponse = require("./buildResponse");
-const pickAPrimary = require("./pickAPrimary");
+import buildResponse from "./buildResponse";
+import pickAPrimary from "./pickAPrimary";
 
 const emptyResponse = {
   primaryPet: null,
@@ -30,4 +30,4 @@ const buildCalculator = pricing => {
   };
 };
 
-module.exports = buildCalculator;
+export default buildCalculator;
