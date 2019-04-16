@@ -1,5 +1,5 @@
-const calculate = require("./calculate");
-const validate = require("./validate");
+const calculate = require("./src/calculate").default;
+const validate = require("./src/validate").default;
 
 module.exports = {
   calculate,
