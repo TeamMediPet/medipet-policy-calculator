@@ -1,54 +1,54 @@
-const pickAPrimary = require("./pickAPrimary");
+const pickAPrimary = require('./pickAPrimary')
 
-describe("Pick a primary pet", () => {
-  test("It should set no primary if all the pets are on accident only", () => {
+describe('Pick a primary pet', () => {
+  test('It should set no primary if all the pets are on accident only', () => {
     const pets = [
       {
-        option: "accidentOnly",
-        type: "cat"
+        planType: 'accidentOnly',
+        petType: 'Cat',
       },
       {
-        type: "dog",
-        option: "accidentOnly"
-      }
-    ];
+        petType: 'Dog',
+        planType: 'accidentOnly',
+      },
+    ]
 
-    expect(pickAPrimary(pets).primaryPet).toBe(null);
-  });
+    expect(pickAPrimary(pets).primaryPet).toBe(null)
+  })
 
-  test("It should pick the cat if the only dog is on accidently only", () => {
+  test('It should pick the cat if the only dog is on accidently only', () => {
     const pets = [
       {
-        option: "option1",
-        type: "cat"
+        planType: 'option1',
+        petType: 'Cat',
       },
       {
-        type: "dog",
-        option: "accidentOnly"
-      }
-    ];
+        petType: 'Dog',
+        planType: 'accidentOnly',
+      },
+    ]
 
     expect(pickAPrimary(pets).primaryPet).toEqual({
-      option: "option1",
-      type: "cat"
-    });
-  });
+      planType: 'option1',
+      petType: 'Cat',
+    })
+  })
 
-  test("It should pick the dog if the both are eligible", () => {
+  test('It should pick the dog if the both are eligible', () => {
     const pets = [
       {
-        option: "option1",
-        type: "cat"
+        planType: 'option1',
+        petType: 'Cat',
       },
       {
-        type: "dog",
-        option: "option1"
-      }
-    ];
+        petType: 'Dog',
+        planType: 'option1',
+      },
+    ]
 
     expect(pickAPrimary(pets).primaryPet).toEqual({
-      option: "option1",
-      type: "dog"
-    });
-  });
-});
+      planType: 'option1',
+      petType: 'Dog',
+    })
+  })
+})

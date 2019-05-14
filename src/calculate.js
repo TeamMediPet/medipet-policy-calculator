@@ -1,5 +1,5 @@
-import buildResponse from "./buildResponse";
-import pickAPrimary from "./pickAPrimary";
+const buildResponse = require('./buildResponse')
+const pickAPrimary = require('./pickAPrimary')
 
 const emptyResponse = {
   primaryPet: null,
@@ -9,25 +9,25 @@ const emptyResponse = {
   monthlyServiceFee: 0,
   annualTotal: 0,
   annualSubTotal: 0,
-  annualServiceFee: 0
-};
+  annualServiceFee: 0,
+}
 
 const buildCalculator = pricing => {
   if (!pricing) {
-    throw new TypeError("No pricing provided");
+    throw new TypeError('No pricing provided')
   }
 
   return pets => {
     if (!pets) {
-      throw new TypeError("You must provide pets");
+      throw new TypeError('You must provide pets')
     }
 
     if (!pets.length) {
-      return emptyResponse;
+      return emptyResponse
     }
 
-    return buildResponse(pickAPrimary(pets), pricing);
-  };
-};
+    return buildResponse(pickAPrimary(pets), pricing)
+  }
+}
 
-export default buildCalculator;
+module.exports = buildCalculator

@@ -1,8 +1,8 @@
-import calculate from "./calculate";
+const calculate = require('./calculate')
 
 const validate = (policy, pets, pricing) => {
-  const calculator = calculate(pricing);
-  return policy === calculator(pets);
-};
+  const calculator = calculate(pricing)
+  return policy === calculator(pets)
+}
 
-export default validate;
+module.exports = validate
