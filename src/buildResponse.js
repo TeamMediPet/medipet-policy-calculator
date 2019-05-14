@@ -1,15 +1,17 @@
-const monthlyServiceFee = 12
-const annualServiceFee = 132
-
 const calculateMonthlySubTotal = pets =>
-  pets.reduce((acc, current) => acc + current.premium, 0)
+  pets.reduce((acc, current) => acc + current, 0)
 
-const calculateAnnualSubTotal = (pets, monthlySubTotal) => {
+const calculateAnnualSubTotal = (
+  pets,
+  monthlySubTotal,
+  discountablePercentage,
+) => {
   const discountableAmount = calculateMonthlySubTotal(
     pets.filter(pet => pet.planType !== 'accidentOnly'),
   )
   return (
-    12 * discountableAmount * 0.95 + (monthlySubTotal - discountableAmount) * 12
+    12 * discountableAmount * discountablePercentage +
+    (monthlySubTotal - discountableAmount) * 12
   )
 }
 
@@ -28,9 +30,18 @@ const buildResponse = (pets, pricing) => {
     pets: pets.pets.map(pet => premium(pet)),
   }
 
+  const discountablePercentage = 1 - pricing.annualDiscountPercentage / 100
   const flattenedPets = [...petsWithPremiums.pets, petsWithPremiums.primaryPet]
+  const monthlyServiceFee = pricing.monthlyServiceFee
+  const annualServiceFee = pricing.annualServiceFee
   const monthlySubTotal = calculateMonthlySubTotal(flattenedPets)
-  const annualSubTotal = calculateAnnualSubTotal(flattenedPets, monthlySubTotal)
+  const monthlyTotal = monthlySubTotal + monthlyServiceFee
+  const annualSubTotal = calculateAnnualSubTotal(
+    flattenedPets,
+    monthlySubTotal,
+    discountablePercentage,
+  )
+  const annualTotal = annualSubTotal + annualServiceFee
 
   return {
     ...petsWithPremiums,
