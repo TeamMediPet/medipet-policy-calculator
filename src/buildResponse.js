@@ -1,11 +1,11 @@
 const monthlyServiceFee = 12
 const annualServiceFee = 132
 
-const monthlySubTotal = pets =>
+const calculateMonthlySubTotal = pets =>
   pets.reduce((acc, current) => acc + current.premium, 0)
 
-const annualSubTotal = (pets, monthlySubTotal) => {
-  const discountableAmount = monthlySubTotal(
+const calculateAnnualSubTotal = (pets, monthlySubTotal) => {
+  const discountableAmount = calculateMonthlySubTotal(
     pets.filter(pet => pet.planType !== 'accidentOnly'),
   )
   return (
@@ -29,8 +29,8 @@ const buildResponse = (pets, pricing) => {
   }
 
   const flattenedPets = [...petsWithPremiums.pets, petsWithPremiums.primaryPet]
-  const monthlySubTotal = monthlySubTotal(flattenedPets)
-  const annualSubTotal = annualSubTotal(flattenedPets, monthlySubTotal)
+  const monthlySubTotal = calculateMonthlySubTotal(flattenedPets)
+  const annualSubTotal = calculateAnnualSubTotal(flattenedPets, monthlySubTotal)
 
   return {
     ...petsWithPremiums,
