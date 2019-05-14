@@ -28,7 +28,7 @@ const buildResponse = (pets, pricing) => {
     pets: pets.pets.map(pet => premium(pet)),
   }
 
-  const flattenedPets = [...petsWithPremiums.pets, primaryPet]
+  const flattenedPets = [...petsWithPremiums.pets, petsWithPremiums.primaryPet]
   const monthlySubTotal = monthlySubTotal(flattenedPets)
   const annualSubTotal = annualSubTotal(flattenedPets, monthlySubTotal)
 
