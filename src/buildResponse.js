@@ -1,7 +1,7 @@
 const round = num => +(Math.round(num + 'e+2') + 'e-2')
 
 const calculateMonthlySubTotal = pets =>
-  pets.reduce((acc, current) => acc + current, 0)
+  pets.reduce((acc, current) => acc + current.gross, 0)
 
 const calculateAnnualSubTotal = (
   pets,
@@ -20,12 +20,19 @@ const calculateAnnualSubTotal = (
 
 const buildResponse = (pets, pricing) => {
   const premium = (pet, mode = 'secondary') => {
-    if (pet.planType === 'accidentOnly') {
-      return pricing.accidentOnly
-    }
+    const { id } = pet
+    const net =
+      pet.planType === 'accidentOnly'
+        ? pricing.accidentOnly
+        : pricing[pet.planType][pet.petType.toLowerCase()][mode]
+    const addOn = pet.isTopPet ? pricing.topPet : 0
 
-    const premium = pricing[pet.planType][pet.petType.toLowerCase()][mode]
-    return pet.isTopPet ? premium + pricing.topPet : premium
+    return {
+      id,
+      net,
+      addOn,
+      gross: net + addOn,
+    }
   }
 
   const petsWithPremiums = {
