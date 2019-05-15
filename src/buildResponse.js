@@ -1,3 +1,5 @@
+const round = num => +(Math.round(num + 'e+2') + 'e-2')
+
 const calculateMonthlySubTotal = pets =>
   pets.reduce((acc, current) => acc + current, 0)
 
@@ -9,6 +11,7 @@ const calculateAnnualSubTotal = (
   const discountableAmount = calculateMonthlySubTotal(
     pets.filter(pet => pet.planType !== 'accidentOnly'),
   )
+
   return (
     12 * discountableAmount * discountablePercentage +
     (monthlySubTotal - discountableAmount) * 12
@@ -34,12 +37,14 @@ const buildResponse = (pets, pricing) => {
   const flattenedPets = [...petsWithPremiums.pets, petsWithPremiums.primaryPet]
   const monthlyServiceFee = pricing.monthlyServiceFee
   const annualServiceFee = pricing.annualServiceFee
-  const monthlySubTotal = calculateMonthlySubTotal(flattenedPets)
+  const monthlySubTotal = round(calculateMonthlySubTotal(flattenedPets))
   const monthlyTotal = monthlySubTotal + monthlyServiceFee
-  const annualSubTotal = calculateAnnualSubTotal(
-    flattenedPets,
-    monthlySubTotal,
-    discountablePercentage,
+  const annualSubTotal = round(
+    calculateAnnualSubTotal(
+      flattenedPets,
+      monthlySubTotal,
+      discountablePercentage,
+    ),
   )
   const annualTotal = annualSubTotal + annualServiceFee
 

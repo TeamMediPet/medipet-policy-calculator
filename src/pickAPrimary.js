@@ -8,10 +8,10 @@ const firstDogOrCat = pets => {
 
 const pickAPrimary = pets => {
   const eligible = pets.filter(pet => pet.planType !== 'accidentOnly')
-  const primaryPet = firstDogOrCat(eligible) || null
+  const primaryPet = firstDogOrCat(eligible) || pets[0]
 
   return {
-    pets: primaryPet ? pets.filter(pet => pet.id !== primaryPet.id) : pets,
+    pets: pets.filter(pet => pet.id !== primaryPet.id),
     primaryPet,
   }
 }
