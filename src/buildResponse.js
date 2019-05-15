@@ -25,7 +25,7 @@ const buildResponse = (pets, pricing) => {
     }
 
     const premium = pricing[pet.planType][pet.petType.toLowerCase()][mode]
-    return pet.isTopPet ? premium + pricing.isTopPet : premium
+    return pet.isTopPet ? premium + pricing.topPet : premium
   }
 
   const petsWithPremiums = {
