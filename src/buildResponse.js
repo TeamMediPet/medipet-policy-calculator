@@ -1,8 +1,10 @@
 const round = num => +(Math.round(num + 'e+2') + 'e-2')
 
+// Sum the monthly subtotal of all pets
 const calculateMonthlySubTotal = pets =>
   pets.reduce((acc, current) => acc + current.gross, 0)
 
+// Sum the annual subtotal of all pets considering discount
 const calculateAnnualSubTotal = (
   pets,
   monthlySubTotal,
@@ -36,7 +38,10 @@ const buildResponse = (pets, pricing) => {
   }
 
   const petsWithPremiums = {
-    primaryPet: premium(pets.primaryPet, 'primary'),
+    primaryPet: premium(
+      pets.primaryPet,
+      pets.length > 3 ? 'secondary' : 'primary',
+    ),
     pets: pets.pets.map(pet => premium(pet)),
   }
 
