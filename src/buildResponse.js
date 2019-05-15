@@ -37,11 +37,12 @@ const buildResponse = (pets, pricing) => {
     }
   }
 
+  // If there are 4 or more pets (1 primary + 3 secondary) on an application
+  // then all pets will get secondary rate
+  const primaryPetMode = pets.pets.length > 2 ? 'secondary' : 'primary'
+
   const petsWithPremiums = {
-    primaryPet: premium(
-      pets.primaryPet,
-      pets.length > 3 ? 'secondary' : 'primary',
-    ),
+    primaryPet: premium(pets.primaryPet, primaryPetMode),
     pets: pets.pets.map(pet => premium(pet)),
   }
 
