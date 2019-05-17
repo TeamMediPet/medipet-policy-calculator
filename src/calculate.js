@@ -2,7 +2,6 @@ const buildResponse = require('./buildResponse')
 const pickAPrimary = require('./pickAPrimary')
 
 const emptyResponse = {
-  primaryPet: null,
   pets: [],
   monthlyTotal: 0,
   monthlySubTotal: 0,
