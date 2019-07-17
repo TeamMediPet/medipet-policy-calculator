@@ -1,4 +1,5 @@
 const round = num => +(Math.round(num + 'e+2') + 'e-2')
+const roundUp = num => Math.ceil(num)
 
 const buildResponse = (pets, pricing) => {
   const discountablePercentage = 1 - pricing.annualDiscountPercentage / 100
@@ -12,11 +13,15 @@ const buildResponse = (pets, pricing) => {
         ? pricing.accidentOnly
         : pricing[pet.planType][pet.petType.toLowerCase()][mode]
     const addOn = pet.isTopPet ? pricing.topPet : 0
-    const gross = round(net + addOn)
 
-    const netAnnual = round(net * 12 * discountablePercentage)
-    const addOnAnnual = round(addOn * 12)
-    const grossAnnual = round(netAnnual + addOnAnnual)
+    // ** Special case **
+    // If plan type is accident only then round up the cents for *each* premium
+    const roundForPremium = pet.planType === 'accidentOnly' ? roundUp : round
+
+    const gross = roundForPremium(net + addOn)
+    const netAnnual = roundForPremium(net * 12 * discountablePercentage)
+    const addOnAnnual = roundForPremium(addOn * 12)
+    const grossAnnual = roundForPremium(netAnnual + addOnAnnual)
 
     return {
       id,
