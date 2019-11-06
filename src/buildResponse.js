@@ -1,14 +1,15 @@
+const isOlderThanSix = require('./isOlderThanSix')
+
 const round = num => +(Math.round(num + 'e+2') + 'e-2')
 const roundUp = num => Math.ceil(num)
 
 const buildResponse = (pets, pricing) => {
-  const discountablePercentage = 1 - pricing.annualDiscountPercentage / 100
   const monthlyServiceFee = pricing.monthlyServiceFee
   const annualServiceFee = pricing.annualServiceFee
 
   const premium = (pet, mode = 'secondary') => {
     const { id } = pet
-    const net =
+    let net =
       pet.planType === 'accidentOnly'
         ? pricing.accidentOnly
         : pricing[pet.planType][pet.petType.toLowerCase()][mode]
@@ -18,8 +19,12 @@ const buildResponse = (pets, pricing) => {
     // If plan type is accident only then round up the cents for *each* premium
     const roundForPremium = pet.planType === 'accidentOnly' ? roundUp : round
 
+    if (pet.planType !== 'accidentOnly' && isOlderThanSix(pet)) {
+      net *= 1 - pricing.olderThanSixIncreasePercentage / 100
+    }
+
     const gross = roundForPremium(net + addOn)
-    const netAnnual = roundForPremium(net * 12 * discountablePercentage)
+    const netAnnual = roundForPremium(net * 12)
     const addOnAnnual = roundForPremium(addOn * 12)
     const grossAnnual = roundForPremium(netAnnual + addOnAnnual)
 

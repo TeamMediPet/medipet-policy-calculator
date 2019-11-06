@@ -33,6 +33,7 @@ describe('calculate', () => {
       monthlyServiceFee: 12,
       annualServiceFee: 132,
       annualDiscountPercentage: 5,
+      olderThanSixIncreasePercentage: 12,
     }
 
     const pets = [
