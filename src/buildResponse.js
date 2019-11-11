@@ -20,7 +20,7 @@ const buildResponse = (pets, pricing) => {
     const roundForPremium = pet.planType === 'accidentOnly' ? roundUp : round
 
     if (pet.planType !== 'accidentOnly' && isOlderThanSix(pet)) {
-      net *= 1 - pricing.olderThanSixIncreasePercentage / 100
+      net *= 1 + pricing.olderThanSixIncreasePercentage / 100
     }
 
     const gross = roundForPremium(net + addOn)
