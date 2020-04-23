@@ -21,16 +21,29 @@ describe('calculate', () => {
   test('test', () => {
     const pricing = {
       option1: {
-        dog: { primary: 326.51, secondary: 293.85 },
-        cat: { primary: 280.09, secondary: 252.08 },
+        dog: {
+          primary: 355,
+          secondary: 337,
+        },
+        cat: {
+          primary: 304,
+          secondary: 289,
+        },
       },
       option2: {
-        dog: { primary: 411.62, secondary: 370.46 },
-        cat: { primary: 331.96, secondary: 298.76 },
+        dog: {
+          primary: 448,
+          secondary: 425,
+        },
+        cat: {
+          primary: 362,
+          secondary: 343,
+        },
       },
-      accidentOnly: 178,
-      topPet: 60,
-      monthlyServiceFee: 12,
+      lite: 270,
+      accidentOnly: 195,
+      topPet: 65,
+      monthlyServiceFee: 15,
       annualServiceFee: 132,
       annualDiscountPercentage: 5,
       olderThanSixIncreasePercentage: 12,

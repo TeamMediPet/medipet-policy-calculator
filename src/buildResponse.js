@@ -10,21 +10,19 @@ const buildResponse = (pets, pricing) => {
   const premium = (pet, mode = 'secondary') => {
     const { id } = pet
     const petType = pet.petType.toLowerCase()
-    let net =
-      pet.planType === 'accidentOnly'
-        ? pricing.accidentOnly
-        : pricing[pet.planType][petType][mode]
+    const isAccidentOrLite =
+      pet.planType === 'accidentOnly' || pet.planType === 'lite'
+
+    let net = isAccidentOrLite
+      ? pricing[pet.planType]
+      : pricing[pet.planType][petType][mode]
     const addOn = pet.isTopPet ? pricing.topPet : 0
 
     // ** Special case **
     // If plan type is accident only then round up the cents for *each* premium
-    const roundForPremium = pet.planType === 'accidentOnly' ? roundUp : round
+    const roundForPremium = isAccidentOrLite ? roundUp : round
 
-    if (
-      petType === 'dog' &&
-      pet.planType !== 'accidentOnly' &&
-      isOlderThanSix(pet)
-    ) {
+    if (petType === 'dog' && !isAccidentOrLite && isOlderThanSix(pet)) {
       net = roundForPremium(
         net * (1 + pricing.olderThanSixIncreasePercentage / 100),
       )
